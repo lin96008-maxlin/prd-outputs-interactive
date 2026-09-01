@@ -1,0 +1,20 @@
+{
+  "name": "prd-outputs-interactive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "交互式 PRD 澄清问卷的本地 MCP Apps 运行时",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test": "node --test ./tests/*.test.mjs",
+    "verify": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.7.5",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

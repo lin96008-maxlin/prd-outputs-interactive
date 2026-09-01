@@ -1,0 +1,20 @@
+{
+  "name": "bettle-juice",
+  "interface": {
+    "displayName": "Bettle Juice Plugins"
+  },
+  "plugins": [
+    {
+      "name": "prd-outputs-interactive",
+      "source": {
+        "source": "local",
+        "path": "./plugins/prd-outputs-interactive"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

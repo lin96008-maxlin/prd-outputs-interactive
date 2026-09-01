@@ -1,0 +1,29 @@
+{
+  "name": "prd-outputs-interactive",
+  "version": "0.1.0",
+  "description": "将多来源需求收敛为可追溯 PRD，并在关键材料不足时按需提供交互式澄清问卷。",
+  "author": {
+    "name": "Bettle Juice",
+    "url": "https://github.com/lin96008-maxlin"
+  },
+  "homepage": "https://github.com/lin96008-maxlin/prd-outputs-interactive",
+  "repository": "https://github.com/lin96008-maxlin/prd-outputs-interactive",
+  "license": "MIT",
+  "keywords": ["prd", "product-management", "mcp-apps", "codex-plugin"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "交互式产品规格撰写",
+    "shortDescription": "按需澄清关键决策，将需求材料整理为可实现、可验证的产品规格。",
+    "longDescription": "围绕事实、范围、能力关系和需求单元组织唯一主稿；材料存在多个关键决策缺口时，通过本地 MCP Apps 问卷集中收集答案，不支持交互 UI 时自动返回文本问题。",
+    "developerName": "Bettle Juice",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/lin96008-maxlin/prd-outputs-interactive",
+    "capabilities": ["PRD", "Interactive", "MCP Apps"],
+    "defaultPrompt": [
+      "分析这些需求材料；存在会改变范围、规则或验收的关键缺口时先集中确认，再形成产品规格。",
+      "更新现有 PRD，将新增决策回写对应需求单元，并同步调整影响范围和验收场景。"
+    ],
+    "brandColor": "#2F7CF6"
+  },
+  "mcpServers": "./.mcp.json"
+}

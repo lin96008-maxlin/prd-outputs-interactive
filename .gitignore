@@ -1,0 +1,6 @@
+node_modules/
+output/
+.playwright-cli/
+tests/questionnaire-preview.html
+.DS_Store
+Thumbs.db

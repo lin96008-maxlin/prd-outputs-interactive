@@ -1,0 +1,4 @@
+interface:
+  display_name: "交互式产品规格撰写"
+  short_description: "按需澄清关键决策，再形成可实现、可验证的唯一主稿。"
+  default_prompt: "使用 $prd-outputs-interactive 分析我提供的材料；信息充分时直接继续，存在多个关键决策缺口时通过交互式问卷确认，再形成或更新唯一主 PRD。"

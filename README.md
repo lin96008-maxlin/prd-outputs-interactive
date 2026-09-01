@@ -6,6 +6,8 @@
 [![MCP Apps](https://img.shields.io/badge/MCP-Apps-0f766e.svg)](./plugins/prd-outputs-interactive/.mcp.json)
 [![Output: Markdown](https://img.shields.io/badge/Output-Markdown-2563eb.svg)](#最终交付是什么)
 
+![产品经理猪有解｜开源 AI 工具与产品方法](./docs/images/brand-banner.png)
+
 把需求说明、会议纪要、笔记、截图、原型反馈和既有 PRD 整理成一份可实现、可验收、可持续更新的产品需求文档。
 
 材料充分时，Plugin 直接生成或更新主 PRD；存在多个会改变范围、角色、流程、权限、数据口径或验收方式的关键缺口时，先在 Codex 对话中打开交互式问卷集中确认，再继续撰写。普通展示细节和可以从材料直接判断的内容不会被做成问卷。

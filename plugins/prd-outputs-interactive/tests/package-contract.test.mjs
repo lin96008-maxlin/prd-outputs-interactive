@@ -44,6 +44,9 @@ test("交互式 Skill 名称、问卷路由和降级规则存在", () => {
   assert.match(appSource, /control\.matches\("\[data-auto-grow\]"\).*autoGrowTextarea\(control\)/);
   assert.match(appSource, /function focusCurrentPageFirstQuestion\(\)/);
   assert.match(appSource, /scrollIntoView\(\{ behavior: "auto", block: "start" \}\)/);
+  assert.match(appSource, /getNextQuestionId\(questionIds, item\.dataset\.questionId\)/);
+  assert.match(appSource, /clearTimeout\(pendingAutoAdvanceTimer\)/);
+  assert.match(appSource, /block: "nearest", inline: "nearest"/);
   assert.equal((appSource.match(/focusCurrentPageFirstQuestion\(\);/g) || []).length, 2);
   assert.match(appSource, /tabindex="-1"/);
   assert.doesNotMatch(appSource, /is-long-list/);

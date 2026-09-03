@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAnswerContext, buildFallbackMarkdown, CUSTOM_OPTION_VALUE, normalizeQuestionnaire } from "../src/questionnaire-contract.mjs";
+import { buildAnswerContext, buildFallbackMarkdown, CUSTOM_OPTION_VALUE, getNextQuestionId, normalizeQuestionnaire } from "../src/questionnaire-contract.mjs";
 
 const sampleQuestion = index => ({
   id: `q-${index}`,
@@ -63,4 +63,13 @@ test("选择题最多支持 8 个长选项", () => {
     }]
   });
   assert.equal(questionnaire.questions[0].options.length, 8);
+});
+
+test("自动定位只进入相邻下一题，不跳过已回答题", () => {
+  const questionIds = Array.from({ length: 10 }, (_, index) => `q-${index + 1}`);
+  const answeredQuestionIds = new Set(["q-2", "q-7"]);
+  assert.equal(answeredQuestionIds.has("q-7"), true);
+  assert.equal(getNextQuestionId(questionIds, "q-5"), "q-6");
+  assert.equal(getNextQuestionId(questionIds, "q-10"), null);
+  assert.equal(getNextQuestionId(questionIds, "missing"), null);
 });

@@ -1,8 +1,9 @@
 import { App } from "@modelcontextprotocol/ext-apps";
-import { buildAnswerContext, CUSTOM_OPTION_VALUE, normalizeQuestionnaire, PAGE_SIZE } from "./questionnaire-contract.mjs";
+import { buildAnswerContext, CUSTOM_OPTION_VALUE, getNextQuestionId, normalizeQuestionnaire, PAGE_SIZE } from "./questionnaire-contract.mjs";
 
 const root = document.getElementById("prd-questionnaire-root");
 const state = { questionnaire: null, page: 0, answers: {}, customAnswers: {}, submitted: false, app: null };
+let pendingAutoAdvanceTimer = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -141,12 +142,34 @@ function autoGrowTextarea(textarea) {
   textarea.style.overflowY = textarea.scrollHeight > 180 ? "auto" : "hidden";
 }
 
+function cancelPendingAutoAdvance() {
+  if (pendingAutoAdvanceTimer === null) return;
+  clearTimeout(pendingAutoAdvanceTimer);
+  pendingAutoAdvanceTimer = null;
+}
+
 function scrollToNextQuestion(item) {
-  const items = Array.from(root.querySelectorAll("[data-question-id]"));
-  const next = items[items.indexOf(item) + 1];
-  if (!next) return;
-  const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-  setTimeout(() => next.scrollIntoView({ behavior, block: "start" }), 160);
+  cancelPendingAutoAdvance();
+  const questionIds = Array.from(root.querySelectorAll("[data-question-id]"), node => node.dataset.questionId);
+  const nextQuestionId = getNextQuestionId(questionIds, item.dataset.questionId);
+  if (!nextQuestionId) return;
+
+  const scheduledPage = state.page;
+  pendingAutoAdvanceTimer = setTimeout(() => {
+    pendingAutoAdvanceTimer = null;
+    if (state.page !== scheduledPage || !item.isConnected) return;
+
+    const next = root.querySelector(`[data-question-id="${CSS.escape(nextQuestionId)}"]`);
+    if (!next) return;
+    const rect = next.getBoundingClientRect();
+    const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+    const inset = 12;
+    const fullyVisible = rect.top >= inset && rect.bottom <= viewportHeight - inset;
+    if (fullyVisible) return;
+
+    const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    next.scrollIntoView({ behavior, block: "nearest", inline: "nearest" });
+  }, 80);
 }
 
 function focusCurrentPageFirstQuestion() {
@@ -184,6 +207,7 @@ function syncControlsFromState() {
 }
 
 function render() {
+  cancelPendingAutoAdvance();
   const questionnaire = state.questionnaire;
   if (!questionnaire) {
     root.innerHTML = '<div class="loading-state"><span></span>正在准备需求澄清问卷…</div>';
@@ -224,6 +248,7 @@ function render() {
     </main>`;
 
   root.querySelectorAll(".answer-option input").forEach(input => input.addEventListener("change", () => {
+    cancelPendingAutoAdvance();
     const item = input.closest("[data-question-id]");
     item.querySelectorAll(".answer-option").forEach(option => option.classList.toggle("is-selected", option.querySelector("input").checked));
     const customSelected = item.querySelector(`input[value="${CUSTOM_OPTION_VALUE}"]`)?.checked;

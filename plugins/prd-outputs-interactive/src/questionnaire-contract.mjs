@@ -3,6 +3,12 @@ export const PAGE_SIZE = 5;
 export const CUSTOM_OPTION_VALUE = "__custom__";
 export const QUESTION_TYPES = new Set(["single", "multi", "short-text", "long-text"]);
 
+export function getNextQuestionId(questionIds, currentQuestionId) {
+  const currentIndex = questionIds.indexOf(currentQuestionId);
+  if (currentIndex < 0) return null;
+  return questionIds[currentIndex + 1] ?? null;
+}
+
 function cleanText(value, field, maxLength) {
   const text = String(value ?? "").trim();
   if (!text) throw new Error(`${field} 不能为空`);

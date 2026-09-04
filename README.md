@@ -1,4 +1,4 @@
-# 问卷式 PRD 需求文档撰写（prd-outputs-interactive）
+# 问卷式PRD撰写（prd-outputs-interactive）
 
 [![持续集成检查](https://github.com/lin96008-maxlin/prd-outputs-interactive/actions/workflows/ci.yml/badge.svg)](https://github.com/lin96008-maxlin/prd-outputs-interactive/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-16a34a.svg)](./LICENSE)

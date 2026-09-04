@@ -10,6 +10,7 @@ test("Plugin 清单、MCP 配置与运行文件一致", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"));
   const mcp = JSON.parse(fs.readFileSync(path.join(pluginRoot, ".mcp.json"), "utf8"));
   assert.equal(manifest.name, "prd-outputs-interactive");
+  assert.equal(manifest.interface.displayName, "问卷式PRD撰写");
   assert.equal(manifest.mcpServers, "./.mcp.json");
   const serverConfig = mcp.mcpServers.prd_clarification;
   assert.equal(serverConfig.command, "node");
@@ -31,7 +32,10 @@ test("MCP App 是单 HTML 且没有外部运行依赖", () => {
 
 test("交互式 Skill 名称、问卷路由和降级规则存在", () => {
   const skill = fs.readFileSync(path.join(pluginRoot, "skills", "prd-outputs-interactive", "SKILL.md"), "utf8");
+  const agentConfig = fs.readFileSync(path.join(pluginRoot, "skills", "prd-outputs-interactive", "agents", "openai.yaml"), "utf8");
   assert.match(skill, /^name: prd-outputs-interactive$/m);
+  assert.match(skill, /中文名\/触发词：问卷式PRD撰写/);
+  assert.match(agentConfig, /display_name: "问卷式PRD撰写"/);
   assert.match(skill, /open_prd_clarification_questionnaire/);
   assert.match(skill, /MCP Apps 不可用时/);
   assert.match(skill, /需求单元/);
